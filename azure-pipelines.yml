@@ -2,9 +2,6 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
-
 jobs:
 - job: build
   pool:
