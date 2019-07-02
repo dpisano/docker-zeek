@@ -1,7 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
 
 trigger:
 - master
@@ -11,9 +7,13 @@ pool:
 
 jobs:
 - job: build
+  pool:
+    vmImage: 'ubuntu-latest'
   steps:
   - script: docker build -t zeek .
 - job: test
+  pool:
+    vmImage: 'ubuntu-latest'
   dependsOn: build
   steps:
   - script: docker run -d --net=host -v /opt/bro/logs:/opt/bro/logs -v /opt/bro/spool:/opt/bro/spool --name zeek zeek
