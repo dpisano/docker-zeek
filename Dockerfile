@@ -31,8 +31,8 @@ CC=clang ./configure --prefix=/usr/local/bro \
   --disable-auxtools \
 --disable-python && \
 make -j 2 && \
-make install && \
-cd /tmp/zeek/aux/ && \
+make install
+RUN cd /tmp/zeek/aux/ && \
 git clone https://github.com/J-Gras/bro-af_packet-plugin.git && \
 cd /tmp/zeek/aux/bro-af_packet-plugin && \
 find . -name "*.bro" -exec sh -c 'mv "$1" "${1%.bro}.zeek"' _ {} \; && \
