@@ -1,6 +1,6 @@
 FROM alpine:3.8
 
-ENV ZEEK_VERSION 2.6.1
+ENV ZEEK_VERSION 2.6.2
 
 RUN apk add --no-cache zlib openssl libstdc++ libpcap libgcc
 RUN apk add --no-cache -t .build-deps \
