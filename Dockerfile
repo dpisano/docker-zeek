@@ -29,7 +29,7 @@ cd /tmp/zeek && \
 CC=clang ./configure --prefix=/usr/local/bro \
   --build-type=MinSizeRel \
   --disable-broker-tests \
-  --disable-zeekctl \
+  --disable-broctl \
   --disable-auxtools \
 --disable-python && \
 make -j 2 && \
