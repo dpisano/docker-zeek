@@ -1,5 +1,7 @@
 FROM alpine:3.8
 
+ENV ZEEK_VERSION 2.6.1
+
 RUN apk add --no-cache zlib openssl libstdc++ libpcap libgcc
 RUN apk add --no-cache -t .build-deps \
   libmaxminddb-dev \
@@ -22,7 +24,7 @@ RUN apk add --no-cache -t .build-deps \
   g++ \
   fts && \
 cd /tmp && \
-git clone --recursive https://github.com/zeek/zeek.git && \
+git clone --branch v$ZEEK_VERSION --recursive https://github.com/zeek/zeek.git && \
 cd /tmp/zeek && \
 CC=clang ./configure --prefix=/usr/local/bro \
   --build-type=MinSizeRel \
@@ -31,14 +33,14 @@ CC=clang ./configure --prefix=/usr/local/bro \
   --disable-auxtools \
 --disable-python && \
 make -j 2 && \
-make install
-RUN cd /tmp/zeek/aux/
-RUN git clone https://github.com/J-Gras/bro-af_packet-plugin.git
-RUN cd /tmp/zeek/aux/bro-af_packet-plugin
-RUN find . -name "*.bro" -exec sh -c 'mv "$1" "${1%.bro}.zeek"' _ {} \; 
-RUN CC=clang ./configure --with-kernel=/usr --bro-dist=/tmp/zeek 
-RUN make -j 2 
-RUN make install && \
+make install && \
+cd /tmp/zeek/aux/ && \
+git clone https://github.com/J-Gras/bro-af_packet-plugin.git && \
+cd /tmp/zeek/aux/bro-af_packet-plugin && \
+find . -name "*.bro" -exec sh -c 'mv "$1" "${1%.bro}.zeek"' _ {} \; && \
+CC=clang ./configure --with-kernel=/usr --bro-dist=/tmp/zeek && \
+make -j 2 && \
+make install && \
 /usr/local/bro/bin/bro -NN Bro::AF_Packet && \
 cd ~/ && \
 strip -s /usr/local/bro/bin/bro && \
