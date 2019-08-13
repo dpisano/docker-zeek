@@ -2,15 +2,14 @@
 trigger:
 - master
 
+pool:
+  vmImage: 'ubuntu-latest'
+
 jobs:
 - job: build
-  pool:
-    vmImage: 'ubuntu-latest'
   steps:
   - script: docker build -t zeek .
 - job: test
-  pool:
-    vmImage: 'ubuntu-latest'
   dependsOn: build
   steps:
   - script: docker run -d --net=host -v /opt/bro/logs:/opt/bro/logs -v /opt/bro/spool:/opt/bro/spool --name zeek zeek
