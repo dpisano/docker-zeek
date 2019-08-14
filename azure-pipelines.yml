@@ -9,11 +9,8 @@ stages:
   - job: build
     steps:
     - script: docker build -t zeek .
-  - job: test
-    dependsOn: build
-    steps:
     - script: docker run -d --net=host -v /opt/bro/logs:/opt/bro/logs -v /opt/bro/spool:/opt/bro/spool --name zeek zeek
     - script: sleep 5
-    - script: docker ps | grep -q bro
-    - script: ps -ea | grep -q bro
+    - script: docker ps | grep -q zeek
+    - script: ps -ea | grep -q zeek
 
