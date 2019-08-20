@@ -38,7 +38,7 @@ cd /tmp/zeek/aux/bro-af_packet-plugin && \
 CC=clang ./configure --with-kernel=/usr --bro-dist=/tmp/zeek && \
 make -j 2 && \
 make install && \
-/usr/local/bro/bin/bro -NN Bro::AF_Packet && \
+/usr/local/bro/bin/zeek -NN Bro::AF_Packet && \
 cd ~/ && \
 strip -s /usr/local/bro/bin/zeek && \
 rm -rf /var/cache/apk/* && \
